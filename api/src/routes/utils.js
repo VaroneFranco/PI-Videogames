@@ -1,8 +1,10 @@
 const { API_KEY } = process.env
 const axios = require('axios')
 const { Genre, Videogame } = require('../db')
+const { Op } = require('sequelize')
 
-async function getDb(){
+
+async function getDb() {
     return await Videogame.findAll({
         include: {
             model: Genre,
@@ -36,28 +38,53 @@ async function getApi() {
             img: game.background_image,
             platforms: game.platforms == false ? "No disponemos de las plataformas de este juego" : game.platforms.map(plataforma => plataforma.platform.name),
             stores: game.stores ? game.stores.map(store => store.store.name) : "No disponemos los stores de este juego"
-            // description: game.data.description,
-            // released: game.data.released,
-            
+          
+
         };
     });
-    console.log(apiData)
+
     return apiData
 };
 
-async function getAllData(){
-    let dataDb= await getDb();
-    let dataApi= await getApi();
-    return [...dataDb, ...dataApi]
+async function getAllData() {
+    let dataDb = await getDb();
+    let dataApi = await getApi();
+    return [...dataApi, ...dataDb]
 }
 
 async function getByName(name) {
     try {
+        let dbData = await Videogame.findAll({
+            where: { name: { [Op.like]: `%${name}%` } },
+            include: {
+                model: Genre,
+                attributes: ['name'],
+                trough: {
+                    attributes: []
+                }
+            }
+        })
+
+        let resultDb = dbData.map(game => {
+            return {
+                name: game.dataValues.name,
+                id: game.dataValues.id,
+                rating: game.dataValues.rating ? game.dataValues.rating : undefined,
+                genres: game.dataValues.genres ? game.dataValues.genres.map(g => g.name) : "No disponemos los generos de este juego",
+                description: game.dataValues.description,
+                img: game.dataValues.background_image ? game.dataValues.background_image : "No disponemos la foto de este juego",
+                platforms: game.dataValues.platforms,
+                stores: game.dataValues.stores ? game.stores.map(store => store.store.name) : "No disponemos los stores de este juego"
+            }
+
+        })
+
+        // let apiData = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=15&search=${name}`) 
         let apiData = await axios.get(`https://api.rawg.io/api/games?key=1f02d81818664102a6fa63065e5be1ab&page_size=15&search=${name}`)
 
         // console.log(apiData.data.results[0].stores.map(store=> store.store.name))
-        let result = apiData.data.results.map(game => {
-            console.log(game)
+        let resultApi = apiData.data.results.map(game => {
+
             return {
                 name: game.name,
                 id: game.id,
@@ -66,14 +93,13 @@ async function getByName(name) {
                 img: game.background_image,
                 platforms: game.platforms == false ? "No disponemos de las plataformas de este juego" : game.platforms.map(plataforma => plataforma.platform.name),
                 stores: game.stores ? game.stores.map(store => store.store.name) : "No disponemos los stores de este juego"
-                // description: game.data.description,
-                // released: game.data.released,
+            
             };
 
 
         })
-        // console.log(result)
-        return result
+
+        return [...resultApi, ...resultDb]
     } catch (err) {
         console.log(err)
         return "No results"
@@ -83,6 +109,7 @@ async function getByName(name) {
 async function getGame(id) {
     try {
         let game = await axios.get(`https://api.rawg.io/api/games/${id}?key=1f02d81818664102a6fa63065e5be1ab`)
+        // let game = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
 
         return {
             name: game.data.name,
@@ -104,7 +131,8 @@ async function getGame(id) {
 }
 async function getGenres() {
     let genres = await axios.get(`https://api.rawg.io/api/genres?key=1f02d81818664102a6fa63065e5be1ab`)
-    // console.log(genres.data.results.map(g=>g.name))
+    // let genres = await axios.get(`https://api.rawg.io/api/genres?key=${API_KEY}`)
+
     return genres.data.results.map(g => g.name)
 }
 

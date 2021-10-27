@@ -3,7 +3,7 @@ const { getApi, getGame, getByName, getGenres, getAllData } = require('./utils')
 const { Genre, Videogame } = require('../db')
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-const API_KEY = "1f02d81818664102a6fa63065e5be1ab"
+
 
 
 
@@ -14,7 +14,9 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.get("/videogames", async (req, res) => {
-    if (req.query.name) return res.send(await getByName(req.query.name))
+    if (req.query.name) {
+        return res.send(await getByName(req.query.name))
+    }
     res.send(await getAllData())
 
 })
@@ -25,7 +27,7 @@ router.get("/videogame/:id", async (req, res) => {
 router.get('/genres', async (req, res) => {
     let genres = await getGenres()
     console.log(genres)
-    genres.forEach(element => {
+    await genres.forEach(element => {
         Genre.findOrCreate({
             where: { name: element }
         })
@@ -34,21 +36,32 @@ router.get('/genres', async (req, res) => {
 })
 
 router.post('/videogame', async (req, res) => {
-   let newGame= await Videogame.create({
-        where: {
-            name: req.body.name,
-            img: req.body.background_image,
-            platforms: req.body.platforms,
-            description: req.body.description,
-            stores: req.body.stores ? req.body.released : null,
-            released: req.body.released ? req.body.released : null,
-        }
-    })
-    let genre=await Genre.findAll({where:{
-        name: req.body.genre
-    }})
-    newGame.addGenre(genre)
-    res.send("Juego creado con éxito")
+    let {
+        name,
+        description,
+        released,
+        rating,
+        platforms,
+        img,
+        genres
+    } = req.body;
+
+    let createdVGame = await Videogame.create({
+        name,
+        description,
+        released,
+        rating,
+        img,
+        platforms,
+    });
+
+    console.log(req.body)
+
+    let genreDb = await Genre.findAll({ where: { name: genres } }); //name de tabla genre
+
+    createdVGame.addGenre(genreDb);
+    // console.log(createdVGame, 'genreeee', genreDb);
+    res.send('Videogame created successfully!');
 })
 
 module.exports = router;
