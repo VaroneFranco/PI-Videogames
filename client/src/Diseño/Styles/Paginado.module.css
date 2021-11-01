@@ -1,0 +1,19 @@
+/* .paginado {
+    display: inline;
+    padding-left: 3px;
+    padding-right: 3px;
+} */
+
+ul {
+  list-style-type:none;
+  text-align: center;
+  /* margin-top: 200px; */
+  display:inline-flex;
+}
+
+li {
+  background-color: #cad2f6;
+  float: left;
+  text-align: center;
+  width: 5em;
+}

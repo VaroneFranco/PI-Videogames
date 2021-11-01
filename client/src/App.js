@@ -1,12 +1,21 @@
 import './App.css';
-import React, { Component }  from 'react';
+import React  from 'react';
 import {Route} from 'react-router'
-import { Landing } from './Components/Landing';
+import  Landing from './Components/Landing';
+import Home from './Components/Home'
+import Videogame from './Components/Videogame';
+import VideogameCreator from './Components/VideogameCreator';
+
+
 function App() {
   return (
     <div className="App">
-      {/* <h1>Henry Videogames</h1> */}
-      <Route path='/' component={Landing}/>
+     
+      <Route exact path='/' component={Landing}/>
+      <Route exact path='/home' component={Home} />
+      <Route path='/videogame/:id' render={({match})=> <Videogame id={match.params.id}/> } />
+      <Route exact path="/videogame" component={VideogameCreator}/>
+      
     </div>
   );
 }
