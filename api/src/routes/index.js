@@ -1,6 +1,7 @@
 const { Router, application } = require('express');
 const { getApi, getGame, getByName, getGenres, getAllData } = require('./utils')
 const { Genre, Videogame } = require('../db')
+const axios = require('axios')
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -17,22 +18,28 @@ router.get("/videogames", async (req, res) => {
     if (req.query.name) {
         return res.send(await getByName(req.query.name))
     }
-    res.send(await getAllData())
+    res.status(200).send(await getAllData())
 
 })
 router.get("/videogame/:id", async (req, res) => {
-    res.send(await getGame(req.params.id))
+    res.status(200).send(await getGame(req.params.id))
 })
 
 router.get('/genres', async (req, res) => {
     let genres = await getGenres()
-    console.log(genres)
+    
     await genres.forEach(element => {
         Genre.findOrCreate({
             where: { name: element }
         })
     });
-    res.send(await Genre.findAll())
+    res.status(200).send(await Genre.findAll())
+})
+
+router.get('/platforms', async(req, res)=>{
+    let platforms= await axios.get('https://api.rawg.io/api/platforms/lists/parents?key=1f02d81818664102a6fa63065e5be1ab')
+    platforms= platforms.data.results.map(pf => pf.name)
+    res.status(200).send(platforms)
 })
 
 router.post('/videogame', async (req, res) => {
@@ -53,9 +60,8 @@ router.post('/videogame', async (req, res) => {
         rating,
         img,
         platforms,
+        genres
     });
-
-    console.log(req.body)
 
     let genreDb = await Genre.findAll({ where: { name: genres } }); //name de tabla genre
 

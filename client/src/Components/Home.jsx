@@ -1,11 +1,12 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getVideogames, filterAlfabethically, filterByGenre, filterByRating } from "../actions";
+import { getVideogames, filterAlfabethically, filterByGenre, filterByRating, getGenres, getPlatforms } from "../actions";
 import Card from './Card';
 import Paginado from "./Paginado";
 import Searchbar from "./SearchBar";
 import { Link, NavLink } from "react-router-dom";
+
 
 export default function Home() {
 
@@ -13,9 +14,13 @@ export default function Home() {
 
     // const allVideogames = useSelector((state) => state.allVideogames);
     const allVideogames = useSelector((state) => state.videogames);
+    const genres = useSelector((state)=> state.genres)
 
     useEffect(() => {
         dispatch(getVideogames());
+        dispatch(getGenres());
+        dispatch(getPlatforms());
+
     }, [dispatch]);
 
 
@@ -56,6 +61,7 @@ export default function Home() {
         e.preventDefault();
         dispatch(getVideogames());
     }
+
 
     return (
         <div>
@@ -102,6 +108,14 @@ export default function Home() {
                 <option value='Simulation'>Simulation</option>
                 <option value='Sports'>Sports</option>
                 <option value='Strategy'>Strategy</option>
+                {/* {
+                    
+                    genres && genres.map(gr=>{
+                        return(
+                            <option value={gr}>{gr}</option>
+                        )
+                    })
+                } */} //NO RECONOCE EL ESTADO DE REDUX. ANDA A SABER PORQUE!
             </select>
             <Paginado allVideogames={allVideogames.length} videogamesPerPage={videogamesPerPage} paginado={paginado} />
             {
