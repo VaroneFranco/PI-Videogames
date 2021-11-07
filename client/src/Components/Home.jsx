@@ -1,11 +1,13 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getVideogames, filterAlfabethically, filterByGenre, filterByRating, getGenres, getPlatforms } from "../actions";
+import { getVideogames, filterAlfabethically, filterByGenre, filterByRating, getGenres, getPlatforms, filterDatabase, deleteFilter } from "../actions";
 import Card from './Card';
 import Paginado from "./Paginado";
 import Searchbar from "./SearchBar";
 import { Link, NavLink } from "react-router-dom";
+import styles from '../Diseño/Styles/Home.module.css'
+import joystick from '../Diseño/Multimedia/Joystick.png'
 
 
 export default function Home() {
@@ -14,7 +16,7 @@ export default function Home() {
 
     // const allVideogames = useSelector((state) => state.allVideogames);
     const allVideogames = useSelector((state) => state.videogames);
-    const genres = useSelector((state)=> state.genres)
+    const genres = useSelector((state) => state.genres)
 
     useEffect(() => {
         dispatch(getVideogames());
@@ -57,76 +59,95 @@ export default function Home() {
         setCurrentPage(1);
         setOrder(`Ordered ${e.target.value}`)
     }
-    const handleClick = (e) => {
+    const handleReload = (e) => {
         e.preventDefault();
         dispatch(getVideogames());
     }
 
+    const handleDelete =(e)=>{
+        e.preventDefault();
+        dispatch(deleteFilter())
+    }
+
+    const handleFilterSource = (e) =>{
+        e.preventDefault();
+        dispatch(filterDatabase(e.target.value))
+    }
+
 
     return (
-        <div>
-            <Searchbar/>
-            <Link to='videogame'>Add Videogame</Link>
+        <div className={styles.wrapper}>
 
-            <button onClick={e => handleClick(e)}>
-                Reload All Videogames
-            </button>
+            <img src={joystick} className={styles.img}/>
+            <Searchbar />
+            <Link to='videogame' className={styles.button}>
+                <a > Add Videogame </a>
+            </Link>
+            <div className={styles.options}>
+                <button className={styles.deleteFilter} onClick={e => handleDelete(e)}>
+                    Delete Filters
+                </button>
+                <button className={styles.reloadGames} onClick={e => handleReload(e)}>
+                    Reload Games
+                </button>
 
-            <select onChange={e => { handleFilterRating(e) }}>
-                <option value="All">All ratings</option>
-                <option value="5">5 stars</option>
-                <option value="4">Above 4 stars</option>
-                <option value="3">Above 3 star</option>
-                <option value="2">Above 2 star</option>
-                <option value="1">Above 1 star</option>
-            </select>
+                <select className={styles.rating} onChange={e => { handleFilterRating(e) }}>
+                    <option >All ratings</option>
+                    <option value="desc">Best to worst</option>
+                    <option value="asc">Worst to best</option>
 
-            <select onChange={e => { handleFilterAlph(e) }}>
-                <option value="">Sort Alphabetically</option>
-                <option value="asc">Ascendente</option>
-                <option value="desc">Descendente</option>
-            </select>
+                </select>
 
-            <select onChange={e => { handleFilterGenre(e) }}>
-                <option value='All' >All Genres</option>
-                <option value='Action'>Action</option>
-                <option value='Adventure'>Adventure</option>
-                <option value='Arcade'>Arcade</option>
-                <option value='Board Games'>Board Games</option>
-                <option value='Card'>Card</option>
-                <option value='Casual'>Casual</option>
-                <option value='Educational'>Educational</option>
-                <option value='Family'>Family</option>
-                <option value='Fighting'>Fighting</option>
-                <option value='Indie'>Indie</option>
-                <option value='Massively Multiplayer'>Massively Multiplayer</option>
-                <option value='Platformer'>Platformer</option>
-                <option value='Puzzle'>Puzzle</option>
-                <option value='Racing'>Racing</option>
-                <option value='RPG'>RPG</option>
-                <option value='Shooter'>Shooter</option>
-                <option value='Simulation'>Simulation</option>
-                <option value='Sports'>Sports</option>
-                <option value='Strategy'>Strategy</option>
-                {/* {
-                    
-                    genres && genres.map(gr=>{
-                        return(
-                            <option value={gr}>{gr}</option>
+                <select className={styles.alph} onChange={e => { handleFilterAlph(e) }}>
+                    <option >Sort Alphabetically</option>
+                    <option value="asc">Ascendente</option>
+                    <option value="desc">Descendente</option>
+                </select>
+
+                <select className={styles.genres} onChange={e => { handleFilterGenre(e) }}>
+                    <option value='All' >All Genres</option>
+                    <option value='Action'>Action</option>
+                    <option value='Adventure'>Adventure</option>
+                    <option value='Arcade'>Arcade</option>
+                    <option value='Board Games'>Board Games</option>
+                    <option value='Card'>Card</option>
+                    <option value='Casual'>Casual</option>
+                    <option value='Educational'>Educational</option>
+                    <option value='Family'>Family</option>
+                    <option value='Fighting'>Fighting</option>
+                    <option value='Indie'>Indie</option>
+                    <option value='Massively Multiplayer'>Massively Multiplayer</option>
+                    <option value='Platformer'>Platformer</option>
+                    <option value='Puzzle'>Puzzle</option>
+                    <option value='Racing'>Racing</option>
+                    <option value='RPG'>RPG</option>
+                    <option value='Shooter'>Shooter</option>
+                    <option value='Simulation'>Simulation</option>
+                    <option value='Sports'>Sports</option>
+                    <option value='Strategy'>Strategy</option>
+
+                </select>
+
+                <select className={styles.sources} onChange={e=> {handleFilterSource(e)} }>
+                    <option value="All">All sources</option>
+                    <option value="db">From Database</option>
+                    <option value="api">From Api</option>
+                </select>
+            </div>
+
+            <Paginado allVideogames={allVideogames.length} videogamesPerPage={videogamesPerPage} paginado={paginado} />
+            
+            <div className={styles.cards}>
+                {
+                    videogamesInPage && videogamesInPage.map(vg => {
+                        return (
+
+                            <Card id={vg.id} name={vg.name} img={vg.img} rating={vg.rating} genres={vg.genres?.map(genre => <p>{genre}</p>) || vg.genres} />
+
                         )
                     })
-                } */} //NO RECONOCE EL ESTADO DE REDUX. ANDA A SABER PORQUE!
-            </select>
-            <Paginado allVideogames={allVideogames.length} videogamesPerPage={videogamesPerPage} paginado={paginado} />
-            {
-                videogamesInPage && videogamesInPage.map(vg => {
-                    return (
-
-                        <Card id={vg.id} name={vg.name} img={vg.img} rating={vg.rating} genres={vg.genres.map(genre => <p>{genre}</p>) || vg.genres} />
-
-                    )
-                })
-            }
+                }
+            </div>
         </div>
     )
 }

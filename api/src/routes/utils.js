@@ -37,7 +37,8 @@ async function getApi() {
             genres: game.genres.map(g => g.name),
             img: game.background_image,
             platforms: game.platforms == false ? "No disponemos de las plataformas de este juego" : game.platforms.map(plataforma => plataforma.platform.name),
-            stores: game.stores ? game.stores.map(store => store.store.name) : "No disponemos los stores de este juego"
+            stores: game.stores ? game.stores.map(store => store.store.name) : "No disponemos los stores de este juego",
+            createdInDb:false
           
 
         };
@@ -74,7 +75,8 @@ async function getByName(name) {
                 description: game.dataValues.description,
                 img: game.dataValues.background_image ? game.dataValues.background_image : "No disponemos la foto de este juego",
                 platforms: game.dataValues.platforms,
-                stores: game.dataValues.stores ? game.stores.map(store => store.store.name) : "No disponemos los stores de este juego"
+                stores: game.dataValues.stores ? game.stores.map(store => store.store.name) : "No disponemos los stores de este juego",
+                createdInDb: game.dataValues.createdInDb
             }
 
         })
@@ -92,7 +94,8 @@ async function getByName(name) {
                 genres: game.genres.map(g => g.name),
                 img: game.background_image,
                 platforms: game.platforms == false ? "No disponemos de las plataformas de este juego" : game.platforms.map(plataforma => plataforma.platform.name),
-                stores: game.stores ? game.stores.map(store => store.store.name) : "No disponemos los stores de este juego"
+                stores: game.stores ? game.stores.map(store => store.store.name) : "No disponemos los stores de este juego",
+                createdInDb : false
             
             };
 
@@ -106,11 +109,9 @@ async function getByName(name) {
     }
 }
 
-async function getGame(id) {
-    try {
-        let game = await axios.get(`https://api.rawg.io/api/games/${id}?key=1f02d81818664102a6fa63065e5be1ab`)
-        // let game = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
-
+async function getGameIdApi(id){
+    try{
+        let game= await axios.get(`https://api.rawg.io/api/games/${id}?key=1f02d81818664102a6fa63065e5be1ab`)
         return {
             name: game.data.name,
             id: game.data.id,
@@ -122,6 +123,51 @@ async function getGame(id) {
             platforms: game.data.platforms ? game.data.platforms.map(plataforma => plataforma.platform.name) : "No disponemos de las plataformas de este juego",
             stores: game.data.stores ? game.data.stores.map(store => store.store.name) : "No disponemos los stores de este juego"
         }
+
+    }catch(err){
+        return []
+    }
+}
+
+async function getGame(id) {
+    try {
+        let apiGame= await getGameIdApi(id)
+        // let game = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
+        let dbData= await getDb()
+        let dbGame= dbData.map(game=>{
+            console.log(game.dataValues.platforms)
+            return{
+                name:game.dataValues.name,
+                id: game.dataValues.id,
+                rating: game.dataValues.rating? game.dataValues.rating : "No disponemos el rating de este juego",
+                description: game.dataValues.description,
+                released: game.dataValues.released? game.dataValues.released : "No disponemos la fecha de este juego",
+                genres: game.dataValues.genres ? game.dataValues.genres.map(genre => genre.name) : "No disponemos del genero de este juego",
+                img: game.dataValues.background_image,
+                platforms: game.dataValues.platforms, // ? game.dataValues.platforms.map(plataforma => plataforma.platform.name) : "No disponemos de las plataformas de este juego"
+                stores: game.dataValues.stores ? game.dataValues.stores.map(store => store.store.name) : "No disponemos los stores de este juego"
+
+            }
+        })
+        // console.log(dbGame)
+        let game = [apiGame, ...dbGame]
+
+        console.log(game)
+        game = game.filter(g=> g.id == id)
+        
+
+        // return {
+        //     name: game.name,
+        //     id: game.id,
+        //     rating: game.rating,
+        //     description: game.description,
+        //     released: game.released,
+        //     genres: game.genres ? game.genres.map(genre => genre.name) : "No disponemos del genero de este juego",
+        //     img: game.background_image,
+        //     platforms: game.platforms ? game.platforms.map(plataforma => plataforma.platform.name) : "No disponemos de las plataformas de este juego",
+        //     stores: game.stores ? game.stores.map(store => store.store.name) : "No disponemos los stores de este juego"
+        // }
+        return game
 
 
     } catch (err) {

@@ -1,7 +1,7 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useDispatch } from 'react-redux';
-import { postVideogame, getPlatforms, getGenres } from '../actions';
+import { postVideogame} from '../actions';
 import { useSelector } from 'react-redux'
 import { Link } from "react-router-dom";
 
@@ -47,11 +47,6 @@ export default function VideogameCreator() {
     const platforms = useSelector((state) => state.platforms)
     const genres = useSelector((state) => state.genres)
 
-    // useEffect(() => {
-    //     dispatch(getPlatforms());
-    //     dispatch(getGenres())
-    // }, [dispatch])
-
     const handleChange = (e) => {
         setGameData({
             ...gameData,
@@ -94,13 +89,13 @@ export default function VideogameCreator() {
         else {
             dispatch(postVideogame(gameData));
             alert("Videogame created succesfully");
-            setGameData({
-                name: "",
-                description: "",
-                platforms: [],
-                img: "",
-                genres: []
-            })
+            // setGameData({
+            //     name: "",
+            //     description: "",
+            //     platforms: [],
+            //     img: "",
+            //     genres: []
+            // })
         }
     }
 

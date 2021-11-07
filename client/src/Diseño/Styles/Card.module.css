@@ -1,5 +1,35 @@
-.imgCard{
-    height: 300px;
-    width: 300px;
 
+.card {
+    text-decoration: none !important;
+    font-size: 10px;
+    border: 2px solid black;
+    width:200px;
+    height:300px ;
+    margin:5px;
+    text-decoration: none;
+    background-color: #edebea;
+    border-radius: 4px;
+    columns: black;
+    /* display: flex;    */
+    /* margin-bottom: 15px; */
+}
+.card:hover{
+    border:5px solid black
+}
+
+
+.imgCard{
+    position: relative;
+    top: 1%;
+    height: 150px;
+    width: 150px;
+    border: 0.1px solid black
+
+
+}
+.genres{
+    text-decoration: none !important  ;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
 }

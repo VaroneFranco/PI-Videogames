@@ -9,17 +9,17 @@ export default function Paginado({ videogamesPerPage, allVideogames, paginado })
     }
 
     return (
-        <nav>
-            <ul className={styles.paginado}>
+        <div className={styles.wrapper}>
+            <ul className={styles.pagination}>
                 {totalPages &&
                     totalPages.map(number => {
                         return (
-                            <li key={number}>
-                                <button  onClick={() => paginado(number)}> {number}</button>
+                            <li className={styles.li} key={number} onClick={() => paginado(number)}>
+                                {number}
                             </li>)
                     })}
             </ul>
-        </nav>
+        </div>
     )
 
 }

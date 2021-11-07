@@ -8,7 +8,6 @@ export default function Videogame({id}) {
     const dispatch = useDispatch()
     const Videogame = useSelector((state)=>state.videogameDetail)
 
-   
     useEffect(()=>{
         dispatch(getVideogameByID(id))
         return function vaciar(){
@@ -18,13 +17,29 @@ export default function Videogame({id}) {
     
     
     
-
-    console.log(Videogame)
+    // console.log(Videogame)
+    // console.log(Videogame[0]?.name)
+    // console.log(Videogame[0].name)
  
     return(
-        <h1>{Videogame.name}</h1>
+       <div>
+           {Videogame && Videogame.map(vg=>{
+               return(<div>
+                   <h2>{vg.name}</h2>
+                   <ol>
+                    { vg.genres[0] == true &&
+                       vg.genres?.map(gr=>{
+                            return(
+                                <li> {gr} </li>
+                            )
+                    })}
+                   </ol>
+                   </div>
+                
+               )
+           })}
+       </div>
     )
-
 }
 
 // let mapStateToProps= (state) =>{

@@ -1,0 +1,102 @@
+.landing {
+    background: url('../Multimedia/Playstation\ Background.jpg') no-repeat center center fixed;
+    filter: blur(4px);
+    min-height: 100%;
+    min-width: 1024px;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+   
+}
+
+.title{
+    position: fixed;
+    top: 50px;
+    font-size: 50px;
+    left: 50px;
+    color: #ffe800;
+    font-family: arial;
+    letter-spacing: 1px;
+}
+
+.button {
+
+    
+    position: absolute;
+    top: 300px;
+    left: 50px;
+    transition:  0.15s linear 0s;
+    display: fixed;
+    padding: 15px 25px;
+    background-color: #ffe219;
+    color: #404040;
+    font-family: arial;
+    letter-spacing: 1px;
+    box-shadow: -6px 6px 0 #404040;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.button:hover {
+    top: 303px;
+    left: 47px;
+    box-shadow: -3px 3px 0 #404040;
+}
+
+.button:hover::after {
+    top: 1px;
+    left: -2px;
+    /* width: 4px;
+    height: 4px; */
+}
+
+.button:hover::before {
+    bottom: -2px;
+    right: 1px;
+    width: 4px;
+    height: 4px;
+}
+/* 
+.button::after {
+    transition: all 0.15s linear 0s;
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: -4px;
+    width: 8px;
+    height: 8px;
+    background-color: #404040;
+    transform: rotate(45deg);
+    z-index: -1;
+} */
+
+.button::before {
+    transition: all 0.15s linear 0s;
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    background-color: #404040;
+    transform: rotate(45deg);
+    z-index: -1;
+}
+
+a:active.button {
+    top: 306px;
+    left: 44px;
+    box-shadow: none;
+}
+
+/* a:active.button:before {
+    bottom: 1px;
+    right: 1px;
+}
+
+a:active.button:after {
+    top: 1px;
+    left: 1px;
+} */

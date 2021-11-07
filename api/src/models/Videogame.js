@@ -36,12 +36,17 @@ module.exports = (sequelize) => {
       allowNull:true
     },
     genres:{
-      type: DataTypes.TEXT,
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull:true
     },
     stores:{
       type: DataTypes.TEXT,
       allowNull:true
+    },
+    createdInDb:{
+      type: DataTypes.BOOLEAN,
+      defaultValue:true,
+      allowNull:false
     }
 
   },{timestamps:false}

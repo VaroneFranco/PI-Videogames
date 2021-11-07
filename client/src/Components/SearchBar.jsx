@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from 'react-redux'
 import { getVideogameByName } from "../actions";
+import styles from '../Diseño/Styles/Searchbar.module.css'
 //Crear searchVideogame action
 export default function Searchbar() {
     const dispatch = useDispatch()
@@ -20,10 +21,10 @@ export default function Searchbar() {
         setSearch(e.target.value)
     }
 
-    return <div>
-        <form onSubmit={e => handleSumbit(e)}>
-            <textarea onChange={e => handleChange(e)} value={search} type="text"></textarea>
-            <button type="submit">BUSCAR</button>
+    return <div className={styles.wrapper}>
+        <form  onSubmit={e => handleSumbit(e)}>
+            <input placeHolder="Find a game" className={styles.input} onChange={e => handleChange(e)} value={search} type="text"></input>
+            <button className={styles.button} type="submit">BUSCAR</button>
         </form>
     </div>
 

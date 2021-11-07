@@ -6,8 +6,10 @@ import {
     GET_GENRES,
     FILTER_ALPH,
     FILTER_GENRE,
+    FILTER_DB,
     FILTER_RATING,
-    EMPTY_DETAILS
+    EMPTY_DETAILS,
+    DELETE_FILTER
 } from "../actions";
 
 const initialState = {
@@ -43,7 +45,6 @@ export default function rootReducer(state = initialState, { type, payload }) {
                 allVideogames: payload
             };
         case GET_GENRES:
-            console.log(payload)
             return {
                 ...state,
                 genres: payload
@@ -56,44 +57,75 @@ export default function rootReducer(state = initialState, { type, payload }) {
         case FILTER_ALPH:
             const videogamesFilterAlph = payload === "asc" ?
                 state.videogames.sort(function (a, b) {
-                    if (a.name.toLowerCase() > b.name.toLowerCase()) {
-                        return 1;
-                    };
-                    if (a.name.toLowerCase() < b.name.toLowerCase()) {
+                    if (a.rating > b.rating) {
                         return -1;
-                    };
+                    }
+                    if (a.rating < b.rating) {
+                        return 1;
+                    }
                     return 0;
-                }) :
-                state.videogames.sort(function (a, b) {
-                    if (a.name.toLowerCase() > b.name.toLowerCase()) {
-                        return -1;
-                    };
-                    if (a.name.toLowerCase() < b.name.toLowerCase()) {
+                }) : state.videogames.sort(function (a, b) {
+                    if (a.rating > b.rating) {
                         return 1;
-                    };
+                    }
+                    if (a.rating < b.rating) {
+                        return -1;
+                    }
                     return 0;
                 });
             return {
                 ...state,
                 videogames: videogamesFilterAlph
-
             };
         case FILTER_GENRE:
-
-            const videogamesFilterGenre = payload === "All" ? state.allVideogames : state.allVideogames.filter(vg => vg.genres.includes(payload));
+            const videogamesFilterGenre = payload === "All" ? state.videogames : state.videogames.filter(vg => vg.genres?.includes(payload));
             return {
                 ...state,
                 videogames: videogamesFilterGenre
-
             };
-        case FILTER_RATING:
+        case FILTER_DB:
+            console.log(state.allVideogames)
+            const videogamesDB= payload === "All" ? state.allVideogames : payload==="db" ? 
+            state.allVideogames.filter(vg=> vg.createdInDb)
+            :
+            state.allVideogames.filter(vg=>!vg.createdInDb)
 
-            console.log(payload);
-            const videogamesFilterRating = payload === "All" ? state.allVideogames : state.allVideogames.filter(vg => vg.rating >= payload)
-            return {
+            return{
                 ...state,
-                videogames: videogamesFilterRating
-            };
+                videogames: videogamesDB
+            }
+       
+        case FILTER_RATING:
+            const videogamesFilterRating = payload === "desc" ?
+            state.videogames.sort(function (a, b) {
+                if (a.rating < b.rating) {
+                    return 1;
+                };
+                if (a.rating > b.rating) {
+                    return -1;
+                };
+                return 0;
+            }) :
+            state.videogames.sort(function (a, b) {
+                if (a.rating < b.rating) {
+                    return -1;
+                };
+                if (a.rating > b.rating) {
+                    return 1;
+                };
+                return 0;
+            });
+            console.log(videogamesFilterRating)
+            return{
+                ...state,
+                videogames:videogamesFilterRating
+            }
+        case DELETE_FILTER:
+            return{
+                ...state,
+                videogames: state.allVideogames
+            }
+        
 
         default: return state;
     };

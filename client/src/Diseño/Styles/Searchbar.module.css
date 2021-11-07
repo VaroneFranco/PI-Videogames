@@ -1,0 +1,30 @@
+/* .searchBar {
+
+    grid-column: 2/4;
+    grid-row: 1/2;
+    margin-top: 25px;
+    height: 30px;
+    width: 400px;
+    border-radius: 4px;
+    
+} */
+
+.wrapper{
+    display: inline-block;
+    text-align: center;
+    grid-column: 2/5;
+    grid-row: 1/2;
+    margin-top: 15px;
+    margin-left: 25px;
+}
+.input{
+    width: 300px;
+    height: 30px;
+    background-color: #edebea;
+    border-radius: 5px;
+}
+
+.button{
+    border-radius: 5px;
+    height: 30px;   
+}

@@ -6,10 +6,12 @@ export const GET_VIDEOGAME_BY_NAME = "GET_VIDEOGAME_BY_NAME";
 export const GET_GENRES = "GET_GENRES";
 export const GET_PLATFORMS = "GET_PLATFORMS";
 export const POST_VIDEOGAME = "POST_VIDEOGAME"
+export const FILTER_DB = "FILTER_DB"
 export const FILTER_ALPH = "FILTER_ALPH";
 export const FILTER_GENRE = "FILTER_GENRE";
 export const FILTER_RATING = "FILTER_RATING";
 export const EMPTY_DETAILS = "EMPTY_DETAILS";
+export const DELETE_FILTER ="DELETE_FILTER"
 
 
 export function getVideogames() {
@@ -93,6 +95,12 @@ export function postVideogame(payload) {
     };
 };
 
+export function filterDatabase(payload){
+    return{
+        type: FILTER_DB,
+        payload: payload
+    }
+}
 
 export function filterAlfabethically(payload) {
     return {
@@ -118,6 +126,12 @@ export function emptyDetails() {
         type: EMPTY_DETAILS
     };
 };
+
+export function deleteFilter(){
+    return{
+        type:DELETE_FILTER
+    }
+}
 
 
 // async function videogames(){
