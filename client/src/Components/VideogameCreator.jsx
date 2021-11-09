@@ -21,10 +21,10 @@ const hayErrores = (gameData) => {
         errores.rating="Required"
     }
     if(!gameData.description){
-        errores.rating="Required"
+        errores.description="Required"
     }
-    if(!gameData.platforms.length === 0){
-        errores.rating="Required"
+    if(gameData.platforms.length === 0){
+        errores.platforms="Required"
     }
     return errores
 }
@@ -62,6 +62,9 @@ export default function VideogameCreator() {
             ...gameData,
             [e.target.name]: e.target.value
         }))
+        console.log(gameData)
+        console.log(errors)
+
     }
 
     function handleCheck(e) {
@@ -75,7 +78,9 @@ export default function VideogameCreator() {
             rating: e.target.value
 
         }))
+        console.log(gameData)
         console.log(errors)
+
     }
 
     const handleSelectGenre = (e) => {

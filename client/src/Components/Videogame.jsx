@@ -18,6 +18,7 @@ export default function Videogame({ id }) {
         }
     }, [dispatch])
 
+    console.log(Videogame)
 
     return (
         <div>
@@ -30,16 +31,21 @@ export default function Videogame({ id }) {
                             <a>Back to Home</a>
                         </Link>
                     </nav>
+                    <img src={vg.img} className={styles.bkg} />
                     <div className={styles.container}>
-                        <img src={vg.img} className={styles.bkg} />
-                        <div className={styles.card}>
-                            <h1>{vg.name}</h1>
-                            <h4>Rating: {vg.rating}</h4>
-                            <h4>Genres:{vg.genres}</h4>
-                            <h4>Release date: {vg.released}</h4>
-                            <h4>Where to play: {vg.platforms}</h4>
-                            <h4>Where to buy: {vg.stores}</h4>
-                            {vg.description}
+                        <div className={styles.flipCard}>
+
+                            <div className={styles.cardFront}>
+                                <h1>{vg.name}</h1>
+                                <h4>Rating: {vg.rating}</h4>
+                                <h4>Genres:{vg.genres}</h4>
+                                <h4>Release date: {vg.released}</h4>
+                                <h4>Where to play: {vg.platforms}</h4>
+                                <h4>Where to buy: {vg.stores}</h4>
+                            </div>
+                            <div className={styles.cardBack}>
+                                <p> {vg.description.replace(/<[^>]*>?/g, '')} </p>
+                            </div>
                         </div>
                     </div>
 

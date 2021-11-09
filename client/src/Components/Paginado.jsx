@@ -15,7 +15,7 @@ export default function Paginado({ videogamesPerPage, allVideogames, paginado })
                     totalPages.map(number => {
                         return (
                             <li className={styles.li} key={number} onClick={() => paginado(number)}>
-                                {number}
+                               <button className={styles.button}>{number}</button>
                             </li>)
                     })}
             </ul>

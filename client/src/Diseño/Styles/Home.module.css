@@ -1,7 +1,7 @@
 .wrapper {
     display: grid;
     grid-template-columns: 150px repeat(3, 1fr);
-    grid-template-rows: 70px repeat(30, 50px);
+    /* grid-template-rows: 70px repeat(30, 50px); */
     background: url('../Multimedia/wp5889137.jpg') no-repeat center center fixed;
     /* filter: blur(4px) */
 

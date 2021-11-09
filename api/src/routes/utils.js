@@ -18,7 +18,7 @@ async function getDb() {
 
 
 async function getApi() {
-    //traigo 120 juegos 
+    // traigo 120 juegos 
     // let apiPage1 = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=1&page_size=40`);
     // let apiPage2 = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=1&page_size=40`);
     // let apiPage3 = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=1&page_size=40`);
@@ -142,14 +142,14 @@ async function getGame(id) {
                 rating: game.dataValues.rating? game.dataValues.rating : "No disponemos el rating de este juego",
                 description: game.dataValues.description,
                 released: game.dataValues.released? game.dataValues.released : "No disponemos la fecha de este juego",
-                genres: game.dataValues.genres ? game.dataValues.genres.map(genre => genre.name) : "No disponemos del genero de este juego",
-                img: game.dataValues.background_image,
+                genres: game.dataValues.genres,
+                img: game.dataValues.img,
                 platforms: game.dataValues.platforms, // ? game.dataValues.platforms.map(plataforma => plataforma.platform.name) : "No disponemos de las plataformas de este juego"
                 stores: game.dataValues.stores ? game.dataValues.stores.map(store => store.store.name) : "No disponemos los stores de este juego"
 
             }
         })
-        // console.log(dbGame)
+        console.log(dbGame)
         let game = [apiGame, ...dbGame]
 
         console.log(game)
