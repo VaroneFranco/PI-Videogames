@@ -1,44 +1,53 @@
 import React from "react"
-import { getVideogameByID , emptyDetails} from "../actions"
-import { useSelector, useDispatch} from "react-redux"
+import { getVideogameByID, emptyDetails } from "../actions"
+import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react"
+import { Link } from 'react-router-dom'
+import styles from '../Diseño/Styles/Videogame.module.css'
+import joystick from '../Diseño/Multimedia/Joystick.png'
 
-export default function Videogame({id}) {
+export default function Videogame({ id }) {
 
     const dispatch = useDispatch()
-    const Videogame = useSelector((state)=>state.videogameDetail)
+    const Videogame = useSelector((state) => state.videogameDetail)
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getVideogameByID(id))
-        return function vaciar(){
+        return function vaciar() {
             dispatch(emptyDetails())
         }
-    },[dispatch])
-    
-    
-    
-    // console.log(Videogame)
-    // console.log(Videogame[0]?.name)
-    // console.log(Videogame[0].name)
- 
-    return(
-       <div>
-           {Videogame && Videogame.map(vg=>{
-               return(<div>
-                   <h2>{vg.name}</h2>
-                   <ol>
-                    { vg.genres[0] == true &&
-                       vg.genres?.map(gr=>{
-                            return(
-                                <li> {gr} </li>
-                            )
-                    })}
-                   </ol>
-                   </div>
-                
-               )
-           })}
-       </div>
+    }, [dispatch])
+
+
+    return (
+        <div>
+            {Videogame && Videogame.map(vg => {
+                return (<div>
+                    <nav className={styles.nav}>
+                        <img src={joystick} className={styles.img} />
+                        <h2 className={styles.title}>HSG</h2>
+                        <Link to="/home" className={styles.button}>
+                            <a>Back to Home</a>
+                        </Link>
+                    </nav>
+                    <div className={styles.container}>
+                        <img src={vg.img} className={styles.bkg} />
+                        <div className={styles.card}>
+                            <h1>{vg.name}</h1>
+                            <h4>Rating: {vg.rating}</h4>
+                            <h4>Genres:{vg.genres}</h4>
+                            <h4>Release date: {vg.released}</h4>
+                            <h4>Where to play: {vg.platforms}</h4>
+                            <h4>Where to buy: {vg.stores}</h4>
+                            {vg.description}
+                        </div>
+                    </div>
+
+                </div>
+
+                )
+            })}
+        </div>
     )
 }
 
@@ -46,7 +55,7 @@ export default function Videogame({id}) {
 //     return{
 //         videogameDetail: state.videogameDetail
 //     }
-    
+
 // }
 
 // export default connect(mapStateToProps, {getVideogameByID, emptyDetails})(Videogame)

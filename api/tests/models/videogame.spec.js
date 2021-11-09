@@ -1,22 +1,28 @@
-const { Videogame, conn } = require('../../src/db.js');
+const { Videogame, Genre } = require("../../src/db")
 const { expect } = require('chai');
 
-describe('Videogame model', () => {
-  before(() => conn.authenticate()
-    .catch((err) => {
-      console.error('Unable to connect to the database:', err);
-    }));
-  describe('Validators', () => {
-    beforeEach(() => Videogame.sync({ force: true }));
-    describe('name', () => {
-      it('should throw an error if name is null', (done) => {
-        Videogame.create({})
-          .then(() => done(new Error('It requires a valid name')))
+describe('Model Testing', function() {
+ 
+  describe('Videogame model', function () {
+    beforeEach(async function() {
+      await Videogame.sync({ force: true });
+    });
+    describe('Validations', function () {
+      it('No deberia crearse si no recibe todos los datos', function(done) {
+         Videogame.create({
+          name: 'Age of gabi',
+         })
+          .then(() => done('No se creó'))
           .catch(() => done());
       });
-      it('should work when its a valid name', () => {
-        Recipe.create({ name: 'Super Mario Bros' });
-      });
     });
-  });
-});
+  })
+  describe('Genre model', function () {
+    beforeEach(async function() {
+      await Genre.sync({ force: true });
+    });
+    it('Name deberia ser un STRING', function(){
+      expect(typeof Genre.name).equal("string")
+    })
+    });
+})

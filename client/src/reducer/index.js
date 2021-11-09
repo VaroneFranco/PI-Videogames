@@ -57,28 +57,30 @@ export default function rootReducer(state = initialState, { type, payload }) {
         case FILTER_ALPH:
             const videogamesFilterAlph = payload === "asc" ?
                 state.videogames.sort(function (a, b) {
-                    if (a.rating > b.rating) {
-                        return -1;
-                    }
-                    if (a.rating < b.rating) {
+                    if (a.name.toLowerCase() > b.name.toLowerCase()) {
                         return 1;
                     }
-                    return 0;
-                }) : state.videogames.sort(function (a, b) {
-                    if (a.rating > b.rating) {
-                        return 1;
-                    }
-                    if (a.rating < b.rating) {
+                    if (a.name.toLowerCase() < b.name.toLowerCase()) {
                         return -1;
                     }
                     return 0;
-                });
+                }) :
+                state.videogames.sort(function (a, b) {
+                    if (a.name.toLowerCase() > b.name.toLowerCase()) {
+                        return -1;
+                    }
+                    if (a.name.toLowerCase() < b.name.toLowerCase()) {
+                        return 1;
+                    }
+                    return 0;
+                })
+                console.log(videogamesFilterAlph)
             return {
                 ...state,
                 videogames: videogamesFilterAlph
             };
         case FILTER_GENRE:
-            const videogamesFilterGenre = payload === "All" ? state.videogames : state.videogames.filter(vg => vg.genres?.includes(payload));
+            const videogamesFilterGenre = payload === "All" ? state.videogames : state.allVideogames.filter(vg => vg.genres?.includes(payload));
             return {
                 ...state,
                 videogames: videogamesFilterGenre

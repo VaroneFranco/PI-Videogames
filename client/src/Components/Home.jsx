@@ -59,10 +59,10 @@ export default function Home() {
         setCurrentPage(1);
         setOrder(`Ordered ${e.target.value}`)
     }
-    const handleReload = (e) => {
-        e.preventDefault();
-        dispatch(getVideogames());
-    }
+    // const handleReload = (e) => {
+    //     e.preventDefault();
+    //     dispatch(getVideogames());
+    // }
 
     const handleDelete =(e)=>{
         e.preventDefault();
@@ -87,9 +87,9 @@ export default function Home() {
                 <button className={styles.deleteFilter} onClick={e => handleDelete(e)}>
                     Delete Filters
                 </button>
-                <button className={styles.reloadGames} onClick={e => handleReload(e)}>
+                {/* <button className={styles.reloadGames} onClick={e => handleReload(e)}>
                     Reload Games
-                </button>
+                </button> */}
 
                 <select className={styles.rating} onChange={e => { handleFilterRating(e) }}>
                     <option >All ratings</option>

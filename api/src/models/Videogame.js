@@ -25,11 +25,11 @@ module.exports = (sequelize) => {
     },
     rating:{
       type:DataTypes.INTEGER,
-      allowNull:true
+      allowNull:false
     },
     img:{
       type:DataTypes.TEXT,
-      allowNull: true
+      allowNull: false
     },
     launchDate:{
       type:DataTypes.INTEGER,
@@ -37,10 +37,14 @@ module.exports = (sequelize) => {
     },
     genres:{
       type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull:true
+      allowNull:false
     },
     stores:{
-      type: DataTypes.TEXT,
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull:true
+    },
+    released:{
+      type:DataTypes.STRING,
       allowNull:true
     },
     createdInDb:{

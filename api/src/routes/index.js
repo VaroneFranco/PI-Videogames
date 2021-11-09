@@ -51,7 +51,8 @@ router.post('/videogame', async (req, res) => {
         platforms,
         img,
         genres,
-        createdInDB
+        createdInDB,
+        stores
         
     } = req.body;
 
@@ -63,7 +64,8 @@ router.post('/videogame', async (req, res) => {
         img,
         platforms,
         createdInDB,
-        // genres
+        genres,
+        stores
     });
 
     let genreDb = await Genre.findAll({ where: { name: genres } }); //name de tabla genre
