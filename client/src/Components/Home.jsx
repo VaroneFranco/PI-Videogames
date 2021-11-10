@@ -1,11 +1,11 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getVideogames, filterAlfabethically, filterByGenre, filterByRating, getGenres, getPlatforms, filterDatabase, deleteFilter } from "../actions";
+import { filterAlfabethically, filterByGenre, filterByRating, filterDatabase, deleteFilter, getVideogames, getGenres, getPlatforms } from "../actions";
 import Card from './Card';
 import Paginado from "./Paginado";
 import Searchbar from "./SearchBar";
-import { Link, NavLink } from "react-router-dom";
+import { Link} from "react-router-dom";
 import styles from '../Diseño/Styles/Home.module.css'
 import joystick from '../Diseño/Multimedia/Joystick.png'
 import error404 from '../Diseño/Multimedia/404.gif'
@@ -25,7 +25,6 @@ export default function Home() {
         dispatch(getPlatforms());
 
     }, [dispatch]);
-
 
 
     const [order, setOrder] = useState('')
@@ -80,12 +79,12 @@ export default function Home() {
         <div className={styles.wrapper}>
 
             <Link to='/'>
-                <img src={joystick} className={styles.img} />
+                <img src={joystick} alt="" className={styles.img} />
             </Link>
 
             <Searchbar />
             <Link to='videogame' className={styles.button}>
-                <a > Add Videogame </a>
+                 Add Videogame
             </Link>
             <div className={styles.options}>
                 <button className={styles.deleteFilter} onClick={e => handleDelete(e)}>
@@ -143,7 +142,7 @@ export default function Home() {
 
             <div className={styles.cards}>
                 {
-                    videogamesInPage ? videogamesInPage.map(vg => {
+                    videogamesInPage.length>0 ? videogamesInPage.map(vg => {
                         return (
 
                             <Card id={vg.id} name={vg.name} img={vg.img} rating={vg.rating} genres={vg.genres?.map(genre => <p>{genre}</p>) || vg.genres} />
@@ -151,7 +150,7 @@ export default function Home() {
                         )
                     })
 
-                        : <img className={styles.error404} src={error404} />
+                        : <img className={styles.error404} alt="" src={error404} />
                 }
             </div>
         </div>

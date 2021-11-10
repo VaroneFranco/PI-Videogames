@@ -159,7 +159,7 @@ export default function VideogameCreator() {
     return (
         <div className={styles.wrapper}>
             <nav className={styles.nav}>
-                <img src={joystick} className={styles.img} />
+                <img src={joystick} alt="" className={styles.img} />
                 <h2 className={styles.title}>HGS</h2>
                 <Link to="/home" >
                     <button className={styles.button}>Previous </button>
@@ -269,7 +269,7 @@ export default function VideogameCreator() {
             </div> */}
             <div className={styles.container}>
                 {
-                    gameData.img && <img className={styles.bkg} src={gameData.img} />
+                    gameData.img && <img className={styles.bkg} alt="" src={gameData.img} />
                 }
                 <div className={styles.card}>
                     <h1>{gameData.name}</h1>

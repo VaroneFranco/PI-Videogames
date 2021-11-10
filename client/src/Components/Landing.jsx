@@ -22,8 +22,8 @@ export default function Landing() {
     return (<>
         <div className={styles.landing} />
           <div className={styles.title}>Henry Game Studios</div>
-          <Link to='home'>
-          <a className={styles.button}> WELCOME </a>
+          <Link to='home' className={styles.button}>
+           WELCOME
           </Link>
           </>
     )

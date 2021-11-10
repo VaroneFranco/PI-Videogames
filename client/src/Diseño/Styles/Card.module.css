@@ -9,17 +9,19 @@
     width:200px;
     height:300px ;
     margin:5px;
+    margin-bottom: 20px;
     text-decoration: none;
-    background-color: #b3b3b3;
+    /* background-color: #b3b3b3; */
+    background-color: rgb(216, 216, 216);
     border-radius: 4px;
-    columns: black;
     transition:  0.15s linear 0s;
     /* display: flex;    */
     /* margin-bottom: 15px; */
+    box-shadow: -4px 4px 0 #404040
 }
 .card:hover{
     outline:2px solid black;
-    box-shadow: -8px 8px 0 #404040;
+    box-shadow: -10px 10px 0 #404040;
 
 }
 
@@ -29,7 +31,8 @@
     top: 1%;
     height: 150px;
     width: 150px;
-    border: 0.1px solid #404040
+    border: 0.1px solid #404040;
+    border-radius: 3px;
 
 
 }

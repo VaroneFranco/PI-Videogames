@@ -23,7 +23,7 @@ export default function Searchbar() {
 
     return <div className={styles.wrapper}>
         <form  onSubmit={e => handleSumbit(e)}>
-            <input placeHolder=" Find a game" className={styles.input} onChange={e => handleChange(e)} value={search} type="text"></input>
+            <input placeholder=" Find a game" className={styles.input} onChange={e => handleChange(e)} value={search} type="text"></input>
             <button className={styles.button} type="submit">BUSCAR</button>
         </form>
     </div>

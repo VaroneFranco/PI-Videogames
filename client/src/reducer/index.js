@@ -73,60 +73,64 @@ export default function rootReducer(state = initialState, { type, payload }) {
                     }
                     return 0;
                 })
-                console.log(videogamesFilterAlph)
+     
             return {
                 ...state,
                 videogames: videogamesFilterAlph
             };
         case FILTER_GENRE:
-            const videogamesFilterGenre = payload === "All" ? state.videogames : state.allVideogames.filter(vg => vg.genres?.includes(payload));
+            const videogamesFilterGenre = payload === "All" ?
+                state.allVideogames :
+                state.allVideogames.filter(vg => vg.genres?.includes(payload));
+
             return {
                 ...state,
                 videogames: videogamesFilterGenre
             };
         case FILTER_DB:
             console.log(state.allVideogames)
-            const videogamesDB= payload === "All" ? state.allVideogames : payload==="db" ? 
-            state.allVideogames.filter(vg=> vg.createdInDb)
-            :
-            state.allVideogames.filter(vg=>!vg.createdInDb)
+            const videogamesDB = payload === "All" ? state.allVideogames : payload === "db" ?
+                state.allVideogames.filter(vg => vg.createdInDb)
+                :
+                state.allVideogames.filter(vg => !vg.createdInDb)
 
-            return{
+            return {
                 ...state,
                 videogames: videogamesDB
             }
-       
+
         case FILTER_RATING:
             const videogamesFilterRating = payload === "desc" ?
-            state.videogames.sort(function (a, b) {
-                if (a.rating < b.rating) {
-                    return 1;
-                };
-                if (a.rating > b.rating) {
-                    return -1;
-                };
-                return 0;
-            }) :
-            state.videogames.sort(function (a, b) {
-                if (a.rating < b.rating) {
-                    return -1;
-                };
-                if (a.rating > b.rating) {
-                    return 1;
-                };
-                return 0;
-            });
-            console.log(videogamesFilterRating)
-            return{
+                state.videogames.sort(function (a, b) {
+                    if (a.rating < b.rating) {
+                        return 1;
+                    };
+                    if (a.rating > b.rating) {
+                        return -1;
+                    };
+                    return 0;
+                }) :
+                state.videogames.sort(function (a, b) {
+                    if (a.rating < b.rating) {
+                        return -1;
+                    };
+                    if (a.rating > b.rating) {
+                        return 1;
+                    };
+                    return 0;
+                });
+        
+            return {
                 ...state,
-                videogames:videogamesFilterRating
+                videogames: videogamesFilterRating
             }
         case DELETE_FILTER:
-            return{
+            console.log(state.allVideogames)
+            return {
                 ...state,
                 videogames: state.allVideogames
             }
-        
+
 
         default: return state;
     };

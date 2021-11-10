@@ -20,13 +20,14 @@ async function getDb() {
 async function getApi() {
     // traigo 120 juegos 
     // let apiPage1 = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=1&page_size=40`);
-    // let apiPage2 = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=1&page_size=40`);
-    // let apiPage3 = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=1&page_size=40`);
+    // let apiPage2 = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=2&page_size=40`);
+    // let apiPage3 = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=3&page_size=40`);
 
     let apiPage1 = await axios.get(`https://api.rawg.io/api/games?key=1f02d81818664102a6fa63065e5be1ab&page=1&page_size=40`);
     let apiPage2 = await axios.get(`https://api.rawg.io/api/games?key=1f02d81818664102a6fa63065e5be1ab&page=2&page_size=40`);
-    let apiPage3 = await axios.get(`https://api.rawg.io/api/games?key=1f02d81818664102a6fa63065e5be1ab&page=1&page_size=40`);
+    let apiPage3 = await axios.get(`https://api.rawg.io/api/games?key=1f02d81818664102a6fa63065e5be1ab&page=3&page_size=40`);
 
+    
     let apiPages = [...apiPage1.data.results, ...apiPage2.data.results, ...apiPage3.data.results];
 
     let apiData = apiPages.map(game => {
@@ -36,11 +37,7 @@ async function getApi() {
             rating: game.rating,
             genres: game.genres.map(g => g.name),
             img: game.background_image,
-            platforms: game.platforms == false ? "No disponemos de las plataformas de este juego" : game.platforms.map(plataforma => plataforma.platform.name),
-            stores: game.stores ? game.stores.map(store => store.store.name) : "No disponemos los stores de este juego",
             createdInDb:false
-          
-
         };
     });
 
@@ -98,10 +95,7 @@ async function getByName(name) {
                 createdInDb : false
             
             };
-
-
         })
-
         return [...resultApi, ...resultDb]
     } catch (err) {
         console.log(err)
@@ -138,20 +132,19 @@ async function getGame(id) {
             return{
                 name:game.dataValues.name,
                 id: game.dataValues.id,
-                rating: game.dataValues.rating? game.dataValues.rating : "No disponemos el rating de este juego",
+                rating: game.dataValues.rating? game.dataValues.rating : "Rating not available",
                 description: game.dataValues.description,
-                released: game.dataValues.released? game.dataValues.released : "No disponemos la fecha de este juego",
+                released: game.dataValues.released? game.dataValues.released : "Release date not available",
                 genres: game.dataValues.genres,
                 img: game.dataValues.img,
                 platforms: game.dataValues.platforms,
-                stores: game.dataValues.stores ? game.dataValues.stores.map(store => store.store.name) : "No disponemos los stores de este juego"
+                stores: game.dataValues.stores ? game.dataValues.stores.map(store => store.store.name) : "Stores not available"
 
             }
         })
-        console.log(dbGame)
+  
         let game = [apiGame, ...dbGame]
 
-        console.log(game)
         game = game.filter(g=> g.id == id)
         
         return game

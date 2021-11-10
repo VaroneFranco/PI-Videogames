@@ -126,4 +126,12 @@ a:active.button {
 }
 .container:hover .flipCard {
     transform: rotateY(180deg);
-  }
+}
+
+.wait{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    left:0;
+
+}
