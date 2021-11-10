@@ -64,14 +64,13 @@ router.post('/videogame', async (req, res) => {
         img,
         platforms,
         createdInDB,
-        genres,
         stores
     });
 
     let genreDb = await Genre.findAll({ where: { name: genres } }); //name de tabla genre
 
     createdVGame.addGenre(genreDb);
-    // console.log(createdVGame, 'genreeee', genreDb);
+   
     res.send('Videogame created successfully!');
 })
 

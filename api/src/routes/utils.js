@@ -5,6 +5,7 @@ const { Op } = require('sequelize')
 
 
 async function getDb() {
+    
     return await Videogame.findAll({
         include: {
             model: Genre,
@@ -14,7 +15,30 @@ async function getDb() {
             }
         }
     })
+
 };
+
+async function dbPresenter(){
+    let gamesDB = await getDb();
+
+    let gamesPresented=gamesDB.map(vg=>{
+        return{
+            name:vg.dataValues.name,
+            id:vg.dataValues.id,
+            rating:vg.dataValues.rating,
+            description:vg.dataValues.description,
+            img:vg.dataValues.img,
+            genres:vg.dataValues.Genres.map(gr=> gr.dataValues.name),
+            platforms: vg.dataValues.platforms,
+            released: vg.dataValues.released || "Release date not available",
+            stores: vg.dataValues.stores ? vg.dataValues.stores.map(store => store.store.name) : "Stores not available",
+            createdInDb: true
+        }
+    });
+
+    return gamesPresented
+
+}
 
 
 async function getApi() {
@@ -45,14 +69,15 @@ async function getApi() {
 };
 
 async function getAllData() {
-    let dataDb = await getDb();
+    let dataDb = await dbPresenter();
+
     let dataApi = await getApi();
     return [...dataApi, ...dataDb]
 }
 
 async function getByName(name) {
     try {
-        let dbData = await Videogame.findAll({
+        let dbDataNotPresented = await Videogame.findAll({
             where: { name: { [Op.like]: `%${name}%` } },
             include: {
                 model: Genre,
@@ -62,26 +87,25 @@ async function getByName(name) {
                 }
             }
         })
-
-        let resultDb = dbData.map(game => {
-            return {
-                name: game.dataValues.name,
-                id: game.dataValues.id,
-                rating: game.dataValues.rating ? game.dataValues.rating : undefined,
-                genres: game.dataValues.genres ? game.dataValues.genres.map(g => g.name) : "No disponemos los generos de este juego",
-                description: game.dataValues.description,
-                img: game.dataValues.background_image ? game.dataValues.background_image : "No disponemos la foto de este juego",
-                platforms: game.dataValues.platforms,
-                stores: game.dataValues.stores ? game.stores.map(store => store.store.name) : "No disponemos los stores de este juego",
-                createdInDb: game.dataValues.createdInDb
+        let resultDb=dbDataNotPresented.map(vg=>{
+            return{
+                name:vg.dataValues.name,
+                id:vg.dataValues.id,
+                rating:vg.dataValues.rating,
+                description:vg.dataValues.description,
+                img:vg.dataValues.img,
+                genres:vg.dataValues.Genres.map(gr=> gr.dataValues.name),
+                platforms: vg.dataValues.plataforms,
+                released: vg.dataValues.released || "Release date not available",
+                stores: vg.dataValues.stores ? vg.dataValues.stores.map(store => store.store.name) : "Stores not available"
             }
+        });
+        
 
-        })
 
         // let apiData = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=15&search=${name}`) 
         let apiData = await axios.get(`https://api.rawg.io/api/games?key=1f02d81818664102a6fa63065e5be1ab&page_size=15&search=${name}`)
 
-        // console.log(apiData.data.results[0].stores.map(store=> store.store.name))
         let resultApi = apiData.data.results.map(game => {
 
             return {
@@ -126,22 +150,9 @@ async function getGameIdApi(id){
 async function getGame(id) {
     try {
         let apiGame= await getGameIdApi(id)
-        let dbData= await getDb()
-        let dbGame= dbData.map(game=>{
-            console.log(game.dataValues.platforms)
-            return{
-                name:game.dataValues.name,
-                id: game.dataValues.id,
-                rating: game.dataValues.rating? game.dataValues.rating : "Rating not available",
-                description: game.dataValues.description,
-                released: game.dataValues.released? game.dataValues.released : "Release date not available",
-                genres: game.dataValues.genres,
-                img: game.dataValues.img,
-                platforms: game.dataValues.platforms,
-                stores: game.dataValues.stores ? game.dataValues.stores.map(store => store.store.name) : "Stores not available"
-
-            }
-        })
+        
+        let dbGame= await dbPresenter()
+    
   
         let game = [apiGame, ...dbGame]
 
