@@ -21,12 +21,12 @@ export default function Videogame({ id }) {
     console.log(Videogame)
 
     return (
-        <div>
+        <div className={styles.wrapper}>
             {Videogame && Videogame.map(vg => {
                 return (<div>
                     <nav className={styles.nav}>
                         <img src={joystick} className={styles.img} />
-                        <h2 className={styles.title}>HSG</h2>
+                        <h2 className={styles.title}>HGS</h2>
                         <Link to="/home" className={styles.button}>
                             <a>Back to Home</a>
                         </Link>
@@ -38,9 +38,12 @@ export default function Videogame({ id }) {
                             <div className={styles.cardFront}>
                                 <h1>{vg.name}</h1>
                                 <h4>Rating: {vg.rating}</h4>
-                                <h4>Genres:{vg.genres}</h4>
+                                <h4>Genres:{vg.genres.map(gr=> <span>{gr} </span>)}</h4>
+
+
+
                                 <h4>Release date: {vg.released}</h4>
-                                <h4>Where to play: {vg.platforms}</h4>
+                                <h4>Where to play: {vg.platforms.map}</h4>
                                 <h4>Where to buy: {vg.stores}</h4>
                             </div>
                             <div className={styles.cardBack}>

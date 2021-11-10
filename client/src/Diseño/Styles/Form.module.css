@@ -4,21 +4,28 @@
   
 }
 
+.img{
+    margin-left: 15px;
+}
+
 .form{
+    padding-top:40px;
     grid-column: 1/2;
     display: flexbox;
-    border-right: 1px solid black;
+    border-right:1px solid rgb(41, 41, 41);
     align-items: center;
-    height: 500px;   
+    height: 545px;
+    background-color: #404040;
+    color: white;
 }
 
 .title {
     position: absolute;
-    left:44%;
-    bottom:400px;
+    left:45%;
+    bottom:520px;
     margin-left: 25px;
     font-size: 40px;
-    color: #ffe219;
+    color: #e6db6b;
 }
 
 .nav {
@@ -30,7 +37,7 @@
     justify-content: space-between;
     /* flex-wrap: wrap; */
     background: url('../Multimedia/wp5889137.jpg') no-repeat center center fixed;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid rgb(41, 41, 41);
 }
 
 .label{
@@ -45,7 +52,7 @@
     height: 46px;
     width: 140px;
     padding: 15px 25px ;
-    background-color: #ffe219;
+    background-color: #e6db6b;
     color: #404040;
     font-family: arial;
     letter-spacing: 1px;
@@ -93,13 +100,14 @@ a:active.button {
 }
 .container{
     display:flex;
+    background-color: #404040;
 }
 
 .card{
     position:absolute;
     margin: 40px;
-    top:15%;
-    left:48%;
+    top:18%;
+    left:55%;
     z-index: 2;
     width: 500px;
     height: 420px;
@@ -108,9 +116,9 @@ a:active.button {
 
 .bkg {
     position: relative;;
-    width: 541px;
-    height: 510px;
-    z-index: 0;
+    width: 100%;
+    height: 100%;
+
 }
 .warning{
     color:red

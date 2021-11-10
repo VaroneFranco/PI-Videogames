@@ -160,7 +160,7 @@ export default function VideogameCreator() {
         <div className={styles.wrapper}>
             <nav className={styles.nav}>
                 <img src={joystick} className={styles.img} />
-                <h2 className={styles.title}>HSG</h2>
+                <h2 className={styles.title}>HGS</h2>
                 <Link to="/home" >
                     <button className={styles.button}>Previous </button>
                 </Link>
@@ -275,7 +275,7 @@ export default function VideogameCreator() {
                     <h1>{gameData.name}</h1>
                     <p>Rating: {gameData.rating}</p>
                     <p>Where to play: {presentPlatforms}</p>
-                    <p>Genres:{presentGenres}</p>
+                    <p>Genres: {presentGenres}</p>
                     <p>Release date: {gameData.released}</p>
                     {/* <h4>Where to buy: {gameData.stores}</h4> */}
                     <p>Description: {gameData.description} </p>

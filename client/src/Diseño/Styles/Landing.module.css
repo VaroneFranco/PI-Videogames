@@ -1,5 +1,6 @@
 .landing {
     background: url('../Multimedia/Playstation\ Background.jpg') no-repeat center center fixed;
+    transform: rotateY(180deg);
     filter: blur(4px);
     min-height: 100%;
     min-width: 1024px;
@@ -13,26 +14,29 @@
 
 .title{
     position: fixed;
-    top: 50px;
-    font-size: 50px;
-    left: 50px;
-    color: #ffe800;
-    font-family: arial;
-    letter-spacing: 1px;
+    top: 80px;
+    font-size: 60px;
+    /* left: 60px; */
+
+    right: 80px;
+    color: #e6db6b;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 3px;
 }
-    
+    /* #ffe219 */
 .button {
 
     
     position: absolute;
-    top: 300px;
-    left: 50px;
+    top: 400px;
+    /* left: 60px; */
+    right: 80px;
     transition:  0.15s linear 0s;
     display: fixed;
     padding: 15px 25px;
-    background-color: #ffe219;
+    background-color: #e6db6b;
     color: #404040;
-    font-family: arial;
+    font-family:  Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;;
     letter-spacing: 1px;
     box-shadow: -6px 6px 0 #404040;
     text-decoration: none;
@@ -40,8 +44,9 @@
 }
 
 .button:hover {
-    top: 303px;
-    left: 47px;
+    top: 403px;
+
+    right:84px;
     box-shadow: -3px 3px 0 #404040;
 }
 
@@ -86,8 +91,9 @@
 }
 
 a:active.button {
-    top: 306px;
-    left: 44px;
+    top: 406px;
+    /* left: 44px; */
+    right:86px;
     box-shadow: none;
 }
 

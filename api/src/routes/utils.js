@@ -132,7 +132,6 @@ async function getGameIdApi(id){
 async function getGame(id) {
     try {
         let apiGame= await getGameIdApi(id)
-        // let game = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
         let dbData= await getDb()
         let dbGame= dbData.map(game=>{
             console.log(game.dataValues.platforms)
@@ -144,7 +143,7 @@ async function getGame(id) {
                 released: game.dataValues.released? game.dataValues.released : "No disponemos la fecha de este juego",
                 genres: game.dataValues.genres,
                 img: game.dataValues.img,
-                platforms: game.dataValues.platforms, // ? game.dataValues.platforms.map(plataforma => plataforma.platform.name) : "No disponemos de las plataformas de este juego"
+                platforms: game.dataValues.platforms,
                 stores: game.dataValues.stores ? game.dataValues.stores.map(store => store.store.name) : "No disponemos los stores de este juego"
 
             }
@@ -155,18 +154,6 @@ async function getGame(id) {
         console.log(game)
         game = game.filter(g=> g.id == id)
         
-
-        // return {
-        //     name: game.name,
-        //     id: game.id,
-        //     rating: game.rating,
-        //     description: game.description,
-        //     released: game.released,
-        //     genres: game.genres ? game.genres.map(genre => genre.name) : "No disponemos del genero de este juego",
-        //     img: game.background_image,
-        //     platforms: game.platforms ? game.platforms.map(plataforma => plataforma.platform.name) : "No disponemos de las plataformas de este juego",
-        //     stores: game.stores ? game.stores.map(store => store.store.name) : "No disponemos los stores de este juego"
-        // }
         return game
 
 

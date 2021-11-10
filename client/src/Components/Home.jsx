@@ -8,6 +8,7 @@ import Searchbar from "./SearchBar";
 import { Link, NavLink } from "react-router-dom";
 import styles from '../Diseño/Styles/Home.module.css'
 import joystick from '../Diseño/Multimedia/Joystick.png'
+import error404 from '../Diseño/Multimedia/404.gif'
 
 
 export default function Home() {
@@ -16,7 +17,7 @@ export default function Home() {
 
     // const allVideogames = useSelector((state) => state.allVideogames);
     const allVideogames = useSelector((state) => state.videogames);
-    const genres = useSelector((state) => state.genres)
+    // const genres = useSelector((state) => state.genres)
 
     useEffect(() => {
         dispatch(getVideogames());
@@ -64,12 +65,12 @@ export default function Home() {
     //     dispatch(getVideogames());
     // }
 
-    const handleDelete =(e)=>{
+    const handleDelete = (e) => {
         e.preventDefault();
         dispatch(deleteFilter())
     }
 
-    const handleFilterSource = (e) =>{
+    const handleFilterSource = (e) => {
         e.preventDefault();
         dispatch(filterDatabase(e.target.value))
     }
@@ -78,7 +79,10 @@ export default function Home() {
     return (
         <div className={styles.wrapper}>
 
-            <img src={joystick} className={styles.img}/>
+            <Link to='/'>
+                <img src={joystick} className={styles.img} />
+            </Link>
+
             <Searchbar />
             <Link to='videogame' className={styles.button}>
                 <a > Add Videogame </a>
@@ -128,7 +132,7 @@ export default function Home() {
 
                 </select>
 
-                <select className={styles.sources} onChange={e=> {handleFilterSource(e)} }>
+                <select className={styles.sources} onChange={e => { handleFilterSource(e) }}>
                     <option value="All">All sources</option>
                     <option value="db">From Database</option>
                     <option value="api">From Api</option>
@@ -136,16 +140,18 @@ export default function Home() {
             </div>
 
             <Paginado allVideogames={allVideogames.length} videogamesPerPage={videogamesPerPage} paginado={paginado} />
-            
+
             <div className={styles.cards}>
                 {
-                    videogamesInPage && videogamesInPage.map(vg => {
+                    videogamesInPage ? videogamesInPage.map(vg => {
                         return (
 
                             <Card id={vg.id} name={vg.name} img={vg.img} rating={vg.rating} genres={vg.genres?.map(genre => <p>{genre}</p>) || vg.genres} />
 
                         )
                     })
+
+                        : <img className={styles.error404} src={error404} />
                 }
             </div>
         </div>

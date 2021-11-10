@@ -1,5 +1,5 @@
 .wrapper{
-  grid-column: 2/5;
+  grid-column: 1/6;
   grid-row: 2/3;
   display:flex;
   border-radius: 4px;
@@ -7,6 +7,7 @@
   margin-bottom: -10px ;
   margin-top: -15px;
   /* line-height: 80px */
+  align-content: center;
 } 
 
 

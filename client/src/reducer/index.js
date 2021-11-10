@@ -30,8 +30,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
         case GET_VIDEOGAME_BY_NAME:
             return {
                 ...state,
-                videogames: payload,
-                allVideogames: payload
+                videogames: payload
             };
         case GET_VIDEOGAME_BY_ID:
             return {

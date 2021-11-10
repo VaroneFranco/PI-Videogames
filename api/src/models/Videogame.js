@@ -35,10 +35,10 @@ module.exports = (sequelize) => {
       type:DataTypes.INTEGER,
       allowNull:true
     },
-    genres:{
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull:false
-    },
+    // genres:{
+    //   type: DataTypes.ARRAY(DataTypes.STRING),
+    //   allowNull:false
+    // },
     stores:{
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull:true

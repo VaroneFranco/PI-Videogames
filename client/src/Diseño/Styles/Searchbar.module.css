@@ -20,15 +20,17 @@
 .input{
     width: 300px;
     height: 30px;
-    background-color: #c0b467;
+    /* background-color: #e6db6b; */
+    background-color: rgb(212, 212, 212);
     border-radius: 5px;
 }
 
 .button{
     border-radius: 5px;
-    height: 30px;
+    height: 35px;
     background-color: rgb(94, 94, 94);  
-    color:rgb(177, 177, 177);   
+    color:rgb(177, 177, 177);
+       
 }
 .button :active{
     color: #ffe219;
